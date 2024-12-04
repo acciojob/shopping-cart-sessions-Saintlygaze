@@ -30,16 +30,23 @@ function saveCart(cart) {
 
 // Add product to cart
 function addToCart(product) {
+  // Retrieve the current cart from sessionStorage
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  cart.push(product);
-  saveCart(cart);
-  displayCart(cart);
+
+  // Check if product already exists in the cart
+  const existingProduct = cart.find(item => item.id === product.id);
+  if (!existingProduct) {
+    cart.push(product);  // Add product if not already in the cart
+  }
+
+  saveCart(cart); // Save the updated cart back to session storage
+  displayCart(cart); // Display the updated cart on the page
 }
 
 // Clear the cart
 function clearCart() {
-  sessionStorage.removeItem("cart");
-  displayCart([]);
+  sessionStorage.removeItem("cart"); // Remove cart from sessionStorage
+  displayCart([]); // Clear the cart display
 }
 
 // Create the product list
